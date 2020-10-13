@@ -3,6 +3,7 @@
 This repository hosts the supplementary materials for the "Quantum Curriculum Development with Microsoft Quantum Development Kit" workshop presented at QCE20 (see [the workshop information and detailed program](https://tcnickolas.github.io/qce20-quantum-curriculum.html)):
 
 * Deep dive: [debugging Q# code](./debugging/).
+* Deep dive: [resource estimation for Q# code](./resource-estimation/).
 
 ## Installation instructions
 
