@@ -1,14 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
 namespace Quantum.Kata.Superposition {
 
     open Microsoft.Quantum.Diagnostics;
-    open Microsoft.Quantum.Arrays;
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Canon;
-    open Microsoft.Quantum.Convert;
-    open Microsoft.Quantum.Math;
 
 
     //////////////////////////////////////////////////////////////////
@@ -22,10 +19,10 @@ namespace Quantum.Kata.Superposition {
 
     // Task 1.1. Prepare basis state
     // Input: 
-    //     1) array of qubits in |0> state
-    //     2) bit string representing the basis state
-    //        [true, false] = |10>
-    // Goal: 
+    //     1) an array of qubits in |0⟩ state.
+    //     2) a bit string representing the basis state
+    //        [true, false] = |10⟩
+    // Goal: Prepare the given basis state on these qubits.
     operation PrepareBasisState (qs : Qubit[], bitString : Bool[]) : Unit {
         // ...
     }

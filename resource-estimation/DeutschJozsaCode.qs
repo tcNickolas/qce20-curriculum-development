@@ -14,34 +14,32 @@
     }
 
     operation ApplyMarkingOracleAsPhaseOracle (markingOracle : ((Qubit[], Qubit) => Unit), inputRegister : Qubit[]) : Unit {
-        using (target = Qubit()) {
-            // Put the target into the |-⟩ state
-            X(target);
-            H(target);
-            // Apply the marking oracle; since the target is in the |-⟩ state,
-            // flipping the target if the register satisfies the oracle condition will apply a -1 factor to the state
-            markingOracle(inputRegister, target);
-            H(target);
-            X(target);
-        }
+        use target = Qubit();
+        // Put the target into the |-⟩ state
+        X(target);
+        H(target);
+        // Apply the marking oracle; since the target is in the |-⟩ state,
+        // this will apply a -1 factor to the states that satisfy the oracle condition
+        markingOracle(inputRegister, target);
+        H(target);
+        X(target);
     }
     
     operation IsFunctionConstant (nQubits : Int, phaseOracle : (Qubit[] => Unit)) : Bool {
         mutable isConstant = true;
-        using (qubits = Qubit[nQubits]) {
-            // Apply the H gates, the oracle and the H gates again
-            within {
-                ApplyToEachA(H, qubits);
-            } apply {
-                phaseOracle(qubits);
-            }
-            // Measure all qubits
-            let measurementResults = MultiM(qubits);
-            // If any of measurement results are 1, the function is balanced
-            for (m in measurementResults) {
-                if (m == One) {
-                    set isConstant = false;
-                }
+        use qubits = Qubit[nQubits];
+        // Apply the H gates, the oracle and the H gates again
+        within {
+            ApplyToEachA(H, qubits);
+        } apply {
+            phaseOracle(qubits);
+        }
+        // Measure all qubits
+        let measurementResults = MultiM(qubits);
+        // If any of measurement results are 1, the function is balanced
+        for m in measurementResults {
+            if m == One {
+                set isConstant = false;
             }
         }
         return isConstant;

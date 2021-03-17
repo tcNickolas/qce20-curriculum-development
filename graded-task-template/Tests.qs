@@ -12,19 +12,18 @@ namespace Quantum.Kata.Superposition {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Diagnostics;
-    open Microsoft.Quantum.Convert;
-    open Microsoft.Quantum.Math;
-    open Microsoft.Quantum.Random;
 
 
+    // See a detailed explanation of this testing approach
+    // at https://devblogs.microsoft.com/qsharp/inside-the-quantum-katas-part-1/.
     @Test("QuantumSimulator")
     operation T101_PrepareBasisState () : Unit {
-        using (qs = Qubit[2]) {
-            let bitString = [true, false];
-            PrepareBasisState(qs, bitString);
-            DumpMachine();
-            Adjoint PrepareBasisState_Reference(qs, bitString);
-            AssertAllZero(qs);
-        }
+        use qs = Qubit[2];
+        let bitString = [true, false];
+        PrepareBasisState(qs, bitString);
+        Message("The state you prepared:");
+        DumpMachine();
+        Adjoint PrepareBasisState_Reference(qs, bitString);
+        AssertAllZero(qs);
     }
 }

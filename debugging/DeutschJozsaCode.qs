@@ -16,31 +16,29 @@
         markingOracle : ((Qubit[], Qubit) => Unit), 
         inputRegister : Qubit[]
     ) : Unit {
-        using (target = Qubit(1)) {
-            // Put the target into the |-⟩ state
-            X(target);
-            H(target);
-            // Apply the marking oracle; since the target is in the |-⟩ state,
-            // flipping the target if the register satisfies the oracle condition will apply a -1 factor to the state
-            markingOracle(inputRegister, target);
-        }
+        use target = Qubit(1);
+        // Put the target into the |-⟩ state
+        X(target);
+        H(target);
+        // Apply the marking oracle; since the target is in the |-⟩ state,
+        // this will apply a -1 factor to the states that satisfy the oracle condition
+        markingOracle(inputRegister, target);
     }
     
     operation IsFunctionConstant (nQubits : Int, phaseOracle : (Qubit[] => Unit)) : Bool {
         mutable isConstant = true;
-        using (qubits = Qubit[nQubits]) {
-            // Apply the H gates, the oracle and the H gates again
-            within {
-                ApplyToEach(H, qubits);
-            } apply {
-                phaseOracle(qubits);
-            }
-            // Measure all qubits
-            let measurementResults = MultiM(qubits);
-            for (m in measurementResults) {
-                if (m == Zero) {
-                    set isConstant = false;
-                }
+        use qubits = Qubit[nQubits];
+        // Apply the H gates, the oracle and the H gates again
+        within {
+            ApplyToEach(H, qubits);
+        } apply {
+            phaseOracle(qubits);
+        }
+        // Measure all qubits
+        let measurementResults = MultiM(qubits);
+        for m in measurementResults {
+            if m == Zero {
+                set isConstant = false;
             }
         }
         return isConstant;

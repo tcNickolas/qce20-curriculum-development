@@ -10,20 +10,14 @@
 
 namespace Quantum.Kata.Superposition {
 
-    open Microsoft.Quantum.Diagnostics;
-    open Microsoft.Quantum.Arrays;
-    open Microsoft.Quantum.Measurement;
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Canon;
-    open Microsoft.Quantum.Convert;
-    open Microsoft.Quantum.Math;
 
 
     // Task 1.1. Prepare basis state
     operation PrepareBasisState_Reference (qs : Qubit[], bitString : Bool[]) : Unit is Adj {
-        let N = Length(qs);
-        for (i in 0 .. N - 1) {
-            if (bitString[i]) {
+        for i in 0 .. Length(qs) - 1 {
+            if bitString[i] {
                 X(qs[i]);
             }
         }
